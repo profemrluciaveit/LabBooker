@@ -7,7 +7,7 @@ require_once '../models/Usuario.php';
 // Verificamos si la solicitud viene por el método POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
-    // Recibimos los datos del formulario
+    
     $email_recibido = $_POST['email'];
     $password_recibido = $_POST['password'];
 
