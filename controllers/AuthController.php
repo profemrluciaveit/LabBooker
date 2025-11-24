@@ -2,7 +2,7 @@
 // TAREA: Completa la lógica de este archivo para que el login funcione.
 
 // TODO: 1. Incluye aquí el archivo de conexión a la base de datos (ej: require_once '../config/db.php')
-require_once '../models/Usuario.php';
+require_once '/../config/db.php';
 
 // Verificamos si la solicitud viene por el método POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
