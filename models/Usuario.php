@@ -1,5 +1,4 @@
 <?php
-// Clase Usuario: Representa a la entidad usuario de la base de datos
 class Usuario {
     // Atributos privados para el encapsulamiento
     private $id;
