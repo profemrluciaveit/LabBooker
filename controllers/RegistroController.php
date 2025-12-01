@@ -16,13 +16,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // TODO: 1. Incluye el archivo de conexión a la base de datos.
     // require_once ...
-    require_once '/../config/db.php';
+    require_once '../config/db.php';
     // TODO: 2. Crea la instancia de conexión.
     $conn = new mysqli($servidor, $usuario_db, $clave_db, $nombre_db);
     // TODO: 3. Escribe la consulta SQL para INSERTAR el usuario en la tabla 'usuarios'.
     // $sql = "INSERT INTO ...";
-    $sql = "INSERT INTO" . " usuarios (nombre, email, password) VALUES ('" . $nombre . "', '" . $email . "', '" . $password . "')";
-
+    $sql = "INSERT INTO usuarios (nombre, email, password) VALUES ('$nombre', '$email', '$password')";
     /* NOTA: Para este ejercicio básico, puedes guardar la contraseña tal cual viene (texto plano).
        Si quieres un desafío extra, investiga la función password_hash() de PHP.
     */
