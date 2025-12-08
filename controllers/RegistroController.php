@@ -16,9 +16,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // TODO: 1. Incluye el archivo de conexión a la base de datos.
     // require_once ...
-
+    require_once __DIR__ . '/../config/db.php';
     // TODO: 2. Crea la instancia de conexión.
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: ../registro.php');
+    exit;
+}
 
+    $nombre = trim($_POST['nombre'] ?? '');
+        $email  = trim($_POST['email']  ?? '');
+            $clave  = $_POST['password']    ?? '';
     // TODO: 3. Escribe la consulta SQL para INSERTAR el usuario en la tabla 'usuarios'.
     // $sql = "INSERT INTO ...";
     
