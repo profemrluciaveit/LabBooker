@@ -15,8 +15,7 @@
     <main>
         <div class="card" style="max-width: 400px; margin: 40px auto;">
             <h2>Crear Cuenta</h2>
-            <form action="#" method="POST">
-                <!-- TODO: Conecta este formulario a un controlador para guardar el usuario -->
+            <form action="../controllers/RegistroController.php" method="POST">
                 <label for="nombre">Nombre Completo</label>
                 <input type="text" id="nombre" name="nombre" required>
 

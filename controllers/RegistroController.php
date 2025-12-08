@@ -39,10 +39,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: ../public/login.php");
         exit();
     } else {
-        echo "Error al registrar el usuario: " . $conn->connect_error;
+        echo "Error al registrar el usuario: " . $conn->error;
+        exit();
     }
-
-    echo "ERROR: La lógica de registro aún no ha sido implementada por el alumno.";
 
 } else {
     // Si intentan entrar a este archivo sin enviar el formulario
