@@ -22,20 +22,21 @@ $stmt = $conn->prepare($sql);
     // TODO: 4. Ejecuta la consulta y obtén el resultado.
 if (!$stmt) {
     die("Error al preparar la consulta: " . $conn->error);
-   $stmt->bind_param("s", $email);
-$stmt->execute();
-$result = $stmt->get_result();
-   
+}
+ 
+  $stmt->bind_param("s", $email);
+      $stmt->execute();
+         $result = $stmt->get_result();
     // TODO: 5. Verifica si el usuario existe y si la contraseña coincide.
     // Pista: Compara $password_recibido con la contraseña que vino de la base de datos.
 if ($result->num_rows === 1) {
-    $usuario = $result->fetch_assoc()
+    $usuario = $result->fetch_assoc();
     /* TODO: 6. Si las credenciales son correctas:
        - Inicia la sesión con session_start().
        - Guarda el ID y el Nombre del usuario en $_SESSION.
        - Redirige al usuario a '../public/index.php'.
     */
-     if (password_verify($clave, $usuario['pass_hash'])) {
+}if (password_verify($clave, $usuario['pass_hash'])) {
 
         $_SESSION['usuario_id']     = $usuario['id'];
         $_SESSION['usuario_nombre'] = $usuario['nombre'];
@@ -60,5 +61,5 @@ $conn->close();
     */
     
     echo "ERROR: La lógica de conexión y validación aún no ha sido implementada por el alumno.";
-}
+
 ?>

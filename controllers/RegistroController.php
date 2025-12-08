@@ -19,34 +19,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     require_once __DIR__ . '/../config/db.php';
     // TODO: 2. Crea la instancia de conexión.
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../registro.php');
-    exit;
-}
+        header('Location: ../registro.php');
+        exit;
+    }
 
     $nombre = trim($_POST['nombre'] ?? '');
-        $email  = trim($_POST['email']  ?? '');
-            $clave  = $_POST['password']    ?? '';
-    // TODO: 3. Escribe la consulta SQL para INSERTAR el usuario en la tabla 'usuarios'.
-    // $sql = "INSERT INTO ...";
+    $email  = trim($_POST['email']  ?? '');
+    $clave  = $_POST['password']    ?? '';
     
-    /* NOTA: Para este ejercicio básico, puedes guardar la contraseña tal cual viene (texto plano).
-       Si quieres un desafío extra, investiga la función password_hash() de PHP.
-    */
-
-    // TODO: 4. Ejecuta la consulta.
-
-    /* TODO: 5. Si la inserción fue exitosa:
-       - Redirige al usuario a la página de login (header("Location: ../public/login.php")).
-       
-       Si falló:
-       - Muestra un mensaje de error.
-    */
-
+    if (!isset($_SESSION['usuario_id'])) {
+        header('Location: ../login.php?error=debe_loguearse');
+        exit;
+    }
+    $usuarioId     = (int) $_SESSION['usuario_id'];
+    $laboratorioId = (int) ($_POST['laboratorio_id'] ?? 0);
+    $fecha         = trim($_POST['fecha'] ?? '');
+    $hora          = trim($_POST['hora']  ?? '');$usuarioId     = (int) $_SESSION['usuario_id'];
+    $laboratorioId = (int) ($_POST['laboratorio_id'] ?? 0);
+    $fecha         = trim($_POST['fecha'] ?? '');
+    $hora          = trim($_POST['hora']  ?? '');
     echo "ERROR: La lógica de registro aún no ha sido implementada por el alumno.";
+    
+    if ($laboratorioId === 0 || $fecha === '' || $hora === '') {
+        header('Location: ../index.php?error=campos_vacios');
+        exit;
+    }
+    $hoy          = new DateTime('today');
+    $fechaReserva = DateTime::createFromFormat('Y-m-d', $fecha);
 
-} else {
+    if (!$fechaReserva || $fechaReserva < $hoy) {
+        header('Location: ../index.php?error=fecha_pasada');
+        exit;
+    }
+    $conn    = getConnection();
+    $reserva = new Reserva($usuarioId, $laboratorioId, $fecha, $hora);
+
+    if ($reserva->guardar($conn)) {
+        header('Location: ../index.php?reserva=ok');
+        exit;
+    } else {
+        header('Location: ../index.php?error=error_db');
+        exit;
+    }
     // Si intentan entrar a este archivo sin enviar el formulario
+}else{
     header("Location: ../public/registro.php");
     exit();
+    
 }
 ?>
