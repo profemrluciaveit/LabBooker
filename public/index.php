@@ -29,7 +29,31 @@
                 <p>Por favor, inicia sesión para reservar.</p>
             </div>
         </section>
+<!-- FORMULARIO DE RESERVA (solo visible si hay sesión) -->
+        <?php if (isset($_SESSION['usuario_id'])): ?>
+        <section class="card">
+            <h2>Realizar una Reserva</h2>
 
+            <form action="../controllers/ReservaController.php" method="POST">
+
+                <label for="laboratorio">Laboratorio:</label>
+                <select name="laboratorio" id="laboratorio" required>
+                    <option value="">Seleccionar...</option>
+                    <option value="1">Laboratorio 1</option>
+                    <option value="2">Laboratorio 2</option>
+                    <option value="3">Laboratorio 3</option>
+                </select>
+
+                <label for="fecha">Fecha:</label>
+                <input type="date" name="fecha" id="fecha" required>
+
+                <label for="hora">Hora:</label>
+                <input type="time" name="hora" id="hora" required>
+
+                <button type="submit">Reservar</button>
+            </form>
+        </section>
+        <?php endif; ?>
         <!-- TODO: Agrega aquí el Formulario de Reserva solo visible para usuarios logueados -->
         <!-- El formulario debe enviar datos a un archivo php que procese la reserva -->
     </main>
