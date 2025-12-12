@@ -7,13 +7,13 @@ session_start();
 
 
 if (!isset($_SESSION['usuario_id'])) {
-    header('Location: ../login.php?error=debe_loguearse');
+    header('Location: ../public/login.php?error=debe_loguearse'); // FIX
     exit;
 }
 
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../index.php');
+    header('Location: ../public/index.php');
     exit;
 }
 
@@ -24,13 +24,13 @@ $fecha         = trim($_POST['fecha'] ?? '');
 $hora          = trim($_POST['hora']  ?? '');
 
 if ($laboratorioId === 0 || $fecha === '' || $hora === '') {
-    header('Location: ../index.php?error=campos_vacios');
+    header('Location: ../public/index.php?error=campos_vacios');
     exit;
 }
 
 
 if (!filter_var($laboratorioId, FILTER_VALIDATE_INT)) {
-    header('Location: ../index.php?error=laboratorio_invalido');
+    header('Location: ../public/index.php?error=laboratorio_invalido');
     exit;
 }
 
@@ -39,7 +39,7 @@ $hoy          = new DateTime('today');
 $fechaReserva = DateTime::createFromFormat('Y-m-d', $fecha);
 
 if (!$fechaReserva || $fechaReserva < $hoy) {
-    header('Location: ../index.php?error=fecha_pasada');
+    header('Location: ../public/index.php?error=fecha_pasada');
     exit;
 }
 
@@ -48,9 +48,9 @@ $conn    = getConnection();
 $reserva = new Reserva($usuarioId, $laboratorioId, $fecha, $hora);
 
 if ($reserva->guardar($conn)) {
-    header('Location: ../index.php?reserva=ok');
+    header('Location: ../public/index.php?reserva=ok');
     exit;
 } else {
-    header('Location: ../index.php?error=error_db');
+    header('Location: ../public/index.php?error=error_db');
     exit;
 }

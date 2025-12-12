@@ -5,7 +5,8 @@ function getConnection(): mysqli {
     $servidor   = "localhost";
     $usuario_db = "root";        
     $clave_db   = "";              
-    $nombre_db  = "labbooker_db";  
+    $nombre_db  = "labbooker";  
+
     $conn = new mysqli($servidor, $usuario_db, $clave_db, $nombre_db);
 
     if ($conn->connect_error) {
