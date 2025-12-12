@@ -1,39 +1,34 @@
 <?php
-// TAREA: Completa la lógica de este archivo para que el login funcione.
+session_start();
+require_once __DIR__ . '/../config/db.php';
 
-// TODO: 1. Incluye aquí el archivo de conexión a la base de datos (ej: require_once '../config/db.php')
-require_once '../models/Usuario.php';
-
-// Verificamos si la solicitud viene por el método POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    // Recibimos los datos del formulario
-    $email_recibido = $_POST['email'];
-    $password_recibido = $_POST['password'];
 
-    echo "Procesando login para: " . $email_recibido . "<br>";
+    $email = trim($_POST["email"]);
+    $password = trim($_POST["password"]);
 
-    // TODO: 2. Crea la instancia de la conexión a la base de datos.
-    
-    // TODO: 3. Escribe la consulta SQL para buscar al usuario que tenga ese email.
-    // $sql = "SELECT * FROM ... WHERE ...";
+    if (empty($email) || empty($password)) {
+        die("Todos los campos son obligatorios.");
+    }
 
-    // TODO: 4. Ejecuta la consulta y obtén el resultado.
+    $pdo = Database::getConnection();
 
-    // TODO: 5. Verifica si el usuario existe y si la contraseña coincide.
-    // Pista: Compara $password_recibido con la contraseña que vino de la base de datos.
+    $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE email = ?");
+    $stmt->execute([$email]);
+    $usuario = $stmt->fetch();
 
-    /* TODO: 6. Si las credenciales son correctas:
-       - Inicia la sesión con session_start().
-       - Guarda el ID y el Nombre del usuario en $_SESSION.
-       - Redirige al usuario a '../public/index.php'.
-    */
+    if (!$usuario) {
+        die("Usuario no encontrado.");
+    }
 
-    /*
-       TODO: 7. Si las credenciales son incorrectas:
-       - Muestra un mensaje de error o redirige al login.
-    */
-    
-    echo "ERROR: La lógica de conexión y validación aún no ha sido implementada por el alumno.";
+    // Para este ejercicio la contraseña está en texto plano (según tu profe)
+    if ($password !== $usuario["password"]) {
+        die("Contraseña incorrecta.");
+    }
+
+    $_SESSION["usuario_id"] = $usuario["id"];
+    $_SESSION["usuario_nombre"] = $usuario["nombre"];
+
+    header("Location: ../public/index.php");
+    exit;
 }
-?>

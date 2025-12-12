@@ -1,37 +1,51 @@
+<?php
+session_start();
+require_once __DIR__ . '/../config/db.php';
+
+$pdo = Database::getConnection();
+
+$labs = $pdo->query("SELECT * FROM laboratorios")->fetchAll();
+?>
+
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LabBooker - Inicio</title>
-    <link rel="stylesheet" href="css/style.css">
+  <title>LabBooker</title>
+  <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="index.php" class="logo">LabBooker</a>
-            <div class="nav-links">
-                <!-- TODO: Si existe $_SESSION['usuario_id'], muestra 'Cerrar Sesión' -->
-                <!-- De lo contrario, muestra Login y Registro -->
-                <a href="login.php">Iniciar Sesión</a>
-                <a href="registro.php">Registrarse</a>
-            </div>
-        </nav>
-    </header>
 
-    <main>
-        <section class="card">
-            <h1>Bienvenido al Sistema de Reservas</h1>
-            <p>Utiliza este sistema para reservar tu turno en los laboratorios de informática.</p>
-            
-            <div class="mensaje">
-                <!-- TODO: Aquí debes mostrar el nombre del usuario si está logueado -->
-                <p>Por favor, inicia sesión para reservar.</p>
-            </div>
-        </section>
+<h1>Reservas de Laboratorio</h1>
 
-        <!-- TODO: Agrega aquí el Formulario de Reserva solo visible para usuarios logueados -->
-        <!-- El formulario debe enviar datos a un archivo php que procese la reserva -->
-    </main>
+<?php if (!isset($_SESSION["usuario_id"])): ?>
+
+    <p><a href="login.php">Iniciar Sesión</a></p>
+    <p><a href="registro.php">Registrarse</a></p>
+
+<?php else: ?>
+
+    <p>Bienvenido, <strong><?php echo $_SESSION["usuario_nombre"]; ?></strong></p>
+    <a href="logout.php">Cerrar Sesión</a>
+
+    <h3>Crear una Reserva</h3>
+
+    <form action="../controllers/ReservaController.php" method="POST">
+        Laboratorio:
+        <select name="laboratorio" required>
+            <?php foreach ($labs as $lab): ?>
+                <option value="<?= $lab["id"] ?>"><?= $lab["nombre"] ?></option>
+            <?php endforeach; ?>
+        </select>
+        <br><br>
+
+        Fecha: <input type="date" name="fecha" required><br><br>
+        Hora: <input type="time" name="hora" required><br><br>
+
+        <button type="submit">Reservar</button>
+    </form>
+
+<?php endif; ?>
+
 </body>
 </html>

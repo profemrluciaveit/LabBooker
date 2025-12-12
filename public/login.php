@@ -1,37 +1,23 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Iniciar Sesión - LabBooker</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Login</title>
+  <link rel="stylesheet" href="style.css">
+
 </head>
+<a href="index.php">volver</a></p>
 <body>
-    <header>
-        <nav>
-            <a href="index.php" class="logo">LabBooker</a>
-        </nav>
-    </header>
 
-    <main>
-        <div class="card" style="max-width: 400px; margin: 40px auto;">
-            <h2>Acceso de Usuarios</h2>
-            
-            <!-- El formulario envía los datos a AuthController.php -->
-            <form action="../controllers/AuthController.php" method="POST">
-                
-                <label for="email">Correo Electrónico</label>
-                <input type="email" id="email" name="email" required placeholder="ejemplo@alumno.edu.uy">
 
-                <label for="password">Contraseña</label>
-                <input type="password" id="password" name="password" required>
+<h2>Iniciar Sesión</h2>
 
-                <button type="submit">Ingresar</button>
-            </form>
-            
-            <p style="margin-top: 15px; text-align: center;">
-                ¿No tienes cuenta? <a href="registro.php">Regístrate aquí</a>
-            </p>
-        </div>
-    </main>
+<form action="../controllers/AuthController.php" method="POST">
+    Email: <input type="email" name="email" required><br><br>
+    Contraseña: <input type="password" name="password" required><br><br>
+    <button type="submit">Entrar</button>
+</form>
+
+<p>¿No tienes cuenta? <a href="registro.php">Registrarse</a></p>
+
 </body>
 </html>
