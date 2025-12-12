@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    if ($email_recibido === '' || $password_recibido === '') {
     header('Location: ../public/login.php?error=campos_vacios');
     exit;
-
+   }
     // TODO: 2. Crea la instancia de la conexión a la base de datos.
     $conn = getConnection();
     // TODO: 3. Escribe la consulta SQL para buscar al usuario que tenga ese email.
@@ -59,6 +59,7 @@ $conn->close();
        - Muestra un mensaje de error o redirige al login.
     */
     
-    echo "ERROR: La lógica de conexión y validación aún no ha sido implementada por el alumno.";
-
+    header('Location: ../public/login.php?error=usuario_no_encontrado');
+        exit;
+}
     ?>
