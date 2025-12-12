@@ -13,10 +13,10 @@ if (!isset($_SESSION['usuario_id'])) {
     exit;
 }
 
-$usuarioId     = (int) $_SESSION['usuario_id'];
+$usuarioId = (int) $_SESSION['usuario_id'];
 $laboratorioId = (int) ($_POST['laboratorio_id'] ?? 0);
-$fecha         = trim($_POST['fecha'] ?? '');
-$hora          = trim($_POST['hora']  ?? '');
+$fecha = trim($_POST['fecha'] ?? '');
+$hora = trim($_POST['hora'] ?? '');
 
 if ($laboratorioId === "" || $fecha === '' || $hora === '') {
     header('Location: ../public/index.php?error=campos_vacios');
@@ -24,11 +24,11 @@ if ($laboratorioId === "" || $fecha === '' || $hora === '') {
 }
 
 
-if (!ctype_digit((string)$laboratorio_id)) {
+if (!ctype_digit((string) $laboratorio_id)) {
     header('Location: ../public/index.php?error=laboratorio_invalido');
     exit;
 }
-$laboratorio_id = (int)$laboratorio_id;
+$laboratorio_id = (int) $laboratorio_id;
 
 
 $dt = DateTime::createFromFormat('Y-m-d H:i', $fecha . ' ' . $hora);
@@ -46,7 +46,7 @@ if ($dt < $ahora) {
     exit;
 }
 
-// Conectar a la base
+
 $conn = getConnection();
 
 $sqlLab = "SELECT id FROM laboratorios WHERE id = ? LIMIT 1";
@@ -76,3 +76,6 @@ if (!$stmt) {
     header('Location: ../public/index.php?error=error_db');
     exit;
 }
+
+header('Location: ../public/index.php?error=error_db');
+exit;

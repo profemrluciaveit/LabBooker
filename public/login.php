@@ -20,7 +20,7 @@
             <form action="../controllers/AuthController.php" method="POST">
                 
                 <label for="email">Correo Electrónico</label>
-                <input type="email" id="email" name="email" required placeholder="ejemplo@alumno.edu.uy">
+                <input type="email" id="email" name="email" required placeholder="ejemplo@alumno.edu.uy" value="<?php $_GET['email'] ?? ''; ?>">
 
                 <label for="password">Contraseña</label>
                 <input type="password" id="password" name="password" required>
